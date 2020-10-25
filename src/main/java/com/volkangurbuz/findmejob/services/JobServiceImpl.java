@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobServiceImpl implements JobService {
@@ -19,7 +20,8 @@ public class JobServiceImpl implements JobService {
     String endPointUrl = String.format(Source.SEARCH_URL, parameter);
     String result = Util.sendGetRequest(endPointUrl);
 
-    logger.info("size: " + jobDao.load(endPointUrl).size());
-    return null;
+    List<Job> jobList = jobDao.load(result);
+
+    return jobList;
   }
 }
