@@ -1,10 +1,10 @@
 package com.volkangurbuz.findmejob.services;
 
 import com.volkangurbuz.findmejob.domain.Job;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public interface JobService {
 
