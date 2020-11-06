@@ -11,9 +11,5 @@ public class FindMeJobApplication {
 
   public static void main(String[] args) throws IOException {
     SpringApplication.run(FindMeJobApplication.class, args);
-
-    JobServiceImpl jobService = new JobServiceImpl();
-
-    System.out.println("jobs " + jobService.listOfJobs("java"));
   }
 }
