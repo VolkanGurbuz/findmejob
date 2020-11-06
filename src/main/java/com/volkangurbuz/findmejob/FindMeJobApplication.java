@@ -14,6 +14,6 @@ public class FindMeJobApplication {
 
     JobServiceImpl jobService = new JobServiceImpl();
 
-    jobService.listOfJobs("java");
+    System.out.println("jobs " + jobService.listOfJobs("java"));
   }
 }
