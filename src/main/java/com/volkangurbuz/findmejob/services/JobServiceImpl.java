@@ -40,10 +40,8 @@ public class JobServiceImpl implements JobService {
   }
 
   @Override
-  public Result addJob(Skill skill) throws IOException {
-
+  public Result addJob(Skill skill) {
     List<Job> jobList = listOfJobs(skill.getSkillName());
-
     if (!jobList.isEmpty()) {
       jobRepository.saveAll(jobList);
       return new SuccessResult(true, "jobs added by skill");
