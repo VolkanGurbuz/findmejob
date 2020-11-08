@@ -28,7 +28,7 @@ public class JobServiceImpl implements JobService {
   }
 
   @Override
-  public List<Job> listOfJobs(String parameter) throws IOException {
+  public List<Job> listOfJobs(String parameter) {
     try {
       String endPointUrl = String.format(Source.SEARCH_URL, parameter);
       String result = Util.sendGetRequest(endPointUrl);
