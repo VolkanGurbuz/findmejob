@@ -1,14 +1,18 @@
 package com.volkangurbuz.findmejob.domain;
 
 import lombok.*;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Document(collection = "job")
 public class Job {
-  public String id;
+
+  @BsonId public String id;
   public String type;
   public String url;
   public String created_at;

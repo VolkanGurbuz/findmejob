@@ -2,8 +2,6 @@ package com.volkangurbuz.findmejob.domain;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @ToString
