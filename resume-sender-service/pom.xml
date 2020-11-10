@@ -14,14 +14,14 @@
     <properties>
         <java.version>11</java.version>
         <lombok.version>1.18.12</lombok.version>
-        <mongodb.version>3.12.7</mongodb.version>
+        <mongodb.version>3.7.1</mongodb.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.mongodb</groupId>
-            <artifactId>mongo-java-driver</artifactId>
-            <version>${mongodb.version}</version>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>3.7.1</version>
         </dependency>
 
         <dependency>
