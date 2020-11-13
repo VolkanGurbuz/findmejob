@@ -38,7 +38,8 @@ public class JobServiceImpl implements JobService {
         String endPointUrl = String.format(Source.SEARCH_URL, parameter, pageIndex);
         String result = Util.sendGetRequest(endPointUrl);
 
-        if (result.isEmpty()) {
+        if (result.equals("[]")) {
+          logger.info("empty");
           break;
         }
         pageIndex++;

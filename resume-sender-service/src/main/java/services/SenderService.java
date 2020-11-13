@@ -12,4 +12,3 @@ public interface SenderService {
 
   void getSession();
 }
-g
