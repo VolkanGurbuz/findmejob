@@ -39,7 +39,6 @@ public class JobServiceImpl implements JobService {
         String result = Util.sendGetRequest(endPointUrl);
 
         if (result.equals("[]")) {
-          logger.info("empty");
           break;
         }
         pageIndex++;
