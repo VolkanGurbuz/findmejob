@@ -9,6 +9,4 @@ import java.util.List;
 public interface SenderService {
 
   void sendResume(List<Email> jobList, Session session);
-
-  void getSession();
 }

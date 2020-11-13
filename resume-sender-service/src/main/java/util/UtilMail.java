@@ -1,10 +1,17 @@
 package util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.io.File;
 import java.util.Properties;
 
 public class UtilMail {
@@ -12,6 +19,8 @@ public class UtilMail {
   private UtilMail() {
     throw new IllegalStateException("Utility class");
   }
+
+  private static Logger logger = LoggerFactory.getLogger(UtilMail.class);
 
   public static Session getSession(Properties prop, String mail, String mailPass) {
 
@@ -25,24 +34,43 @@ public class UtilMail {
         });
   }
 
-  public static void sendmail(Session session) throws MessagingException {
+  public static void sendmail(Session session, String to) {
+    try {
+      Message message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(Constants.PERSONAL_EMAIL));
+      message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+      message.setSubject(Constants.EMAIL_TITLE);
 
-    Message message = new MimeMessage(session);
-    message.setFrom(new InternetAddress("julyenl16@gmail.com"));
-    message.setRecipients(
-        Message.RecipientType.TO, InternetAddress.parse("volkangurbuz16@gmail.com"));
-    message.setSubject("Mail Subject");
+      BodyPart mimeBodyPart = new MimeBodyPart();
+      mimeBodyPart.setContent(Constants.EMAIL_BODY, "text/html");
 
-    String msg = "This is my first email using JavaMailer";
+      String filename = "resume-sender-service/src/main/resources/resume.pdf";
+      DataSource source = new FileDataSource(filename);
+      mimeBodyPart.setDataHandler(new DataHandler(source));
+      mimeBodyPart.setFileName(filename);
 
-    MimeBodyPart mimeBodyPart = new MimeBodyPart();
-    mimeBodyPart.setContent(msg, "text/html");
+      Multipart multipart = new MimeMultipart();
+      multipart.addBodyPart(mimeBodyPart);
+      message.setContent(multipart);
 
-    Multipart multipart = new MimeMultipart();
-    multipart.addBodyPart(mimeBodyPart);
+      Transport.send(message);
+    } catch (Exception e) {
+      logger.error("sendmail", e);
+    }
+  }
 
-    message.setContent(multipart);
-
-    Transport.send(message);
+  public static Properties getProperties() {
+    try {
+      Properties prop = new Properties();
+      prop.put("mail.smtp.auth", true);
+      prop.put("mail.smtp.starttls.enable", true);
+      prop.put("mail.smtp.host", "smtp.gmail.com");
+      prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+      prop.put("mail.smtp.port", "25");
+      return prop;
+    } catch (Exception e) {
+      logger.error("getProperties", e);
+      return null;
+    }
   }
 }
