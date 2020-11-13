@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,12 +30,25 @@ public class JobServiceImpl implements JobService {
   @Override
   public List<Job> listOfJobs(String parameter) {
     try {
-      String endPointUrl = String.format(Source.SEARCH_URL, parameter);
-      String result = Util.sendGetRequest(endPointUrl);
-      return jobDao.load(result);
+
+      List<Job> jobList = new ArrayList<>();
+      int pageIndex = 1;
+
+      while (true) {
+        String endPointUrl = String.format(Source.SEARCH_URL, parameter, pageIndex);
+        String result = Util.sendGetRequest(endPointUrl);
+
+        if (result.equals("[]")) {
+          break;
+        }
+        pageIndex++;
+        jobList.addAll(jobDao.load(result));
+      }
+
+      return jobList;
     } catch (Exception e) {
-      logger.error("listOfJobs" + e.toString());
-      return null;
+      logger.error(String.format("listOfJobs %s", e));
+      return new ArrayList<>();
     }
   }
 
