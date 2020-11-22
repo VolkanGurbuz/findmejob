@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+  findmejobapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 'findmejobapp'
+    ports:
+      - '8080:8080'
+
+  resumesenderapp:
+    build:
+      context: ./resume-sender-service
+      dockerfile: Dockerfile
+    container_name: 'resumesenderapp'
+    ports:
+      - '8081:8081'
